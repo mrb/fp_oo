@@ -1,4 +1,4 @@
-;;; Just Enough Clojure
+;;; Chapter 2 - Just Enough Clojure
 
 ;; Exercise 1
 
@@ -91,7 +91,7 @@
 
 ;; * ClassCastException clojure.lang.PersistentList cannot be cast to clojure.lang.IFn  user/puzzle
 
-;;; A Barely Believable Object
+;;; Chapter 3 - A Barely Believable Object
 
 ;; Exercise 1 - Add, with no shift
 (def add
@@ -123,3 +123,25 @@
 (def valid-triangle?
   (fn [point1 point2 point3]
     (= (count (distinct point1 point2 point3)) 3)))
+
+;;; Chapter 4 - All the Class in a Constructor
+
+;; Change the Point constructor to add x and y accessors (getters).
+;; Use them in shift. Implement add, and have it use shift.
+(def Point
+  (fn [x y]
+    {:x x,
+     :y y
+     :__class_symbol__ 'Point
+     :__methods__ {
+       :class :__class_symbol__
+       :shift (fn [this xinc yinc]
+                (make Point (+ (send-to this :x) xinc)
+                            (+ (send-to this :y) yinc)))
+       :add (fn [this that]
+                (send-to this :shift (send-to that :x)
+                                     (send-to that :y)))
+       :x :x
+       :y :y}}))
+
+;;; Chapter 5 - Moving the Class Out of the Constructor
