@@ -203,3 +203,18 @@
 ;; Instances created before class redefinition benefit from the dynamic nature
 ;; of the method dispatch in the system we're working on. Because the instances
 ;; have a reference to the class and don't hold methods themselves, this works.
+
+;; Exercise 4
+(def apply-message-to
+  (fn [class instance message args]
+    (let [method (message (:__instance_methods__ class))]
+      (cond
+        (nil? method) (message instance)
+        :else (apply method instance args)))))
+
+;; Exercise 5
+;; Sending a message that isn't a method or instance variable will return nil.
+;; You might expect that it would throw some kind of error instead.
+
+;; Chapter 6 - Inheritance (and Recursion)
+
