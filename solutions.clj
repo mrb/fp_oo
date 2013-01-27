@@ -218,3 +218,53 @@
 
 ;; Chapter 6 - Inheritance (and Recursion)
 
+;; Exercise 1
+(def factorial
+  (fn [n]
+    (if
+     (zero? n) 1
+     (* n (factorial (dec n))))))
+
+;; Exercise 2
+(def factorial-1
+     (fn [n so-far]
+       (if (zero? n)
+         so-far
+         (factorial-1 (dec n) (* n so-far)))))
+
+(def factorial
+  (fn [n]
+    (factorial-1 n 1)))
+
+;; Exercise 3
+(def recursive-function
+  (fn [n so-far]
+    (if (empty? n)
+      so-far
+      (recursive-function (rest n)
+                          (+ (first n) so-far)))))
+
+;; Exercise 4
+(def recursive-function
+  (fn [n so-far]
+    (if (empty? n)
+      so-far
+      (recursive-function (rest n)
+                          (* (first n) so-far)))))
+
+;; Exercise 5
+(def recursive-function
+  (fn [op n so-far]
+    (if (empty? n)
+      so-far
+      (recursive-function op (rest n)
+                             (op (first n) so-far)))))
+
+;; Exercise 6
+(def weird-fn
+  (fn [val map]
+    (assoc map val 0)))
+
+(def weird-fn-with-position
+  (fn [val map]
+    (assoc map val (count map))))
